@@ -2,13 +2,13 @@ import java.util.Arrays;
 
 public class Yatzy {
 
-    private static final int FOUR = 4;
-	private static final int THREE = 3;
-	private static final int TWO = 2;
+	private static final int ZERO = 0;
 	private static final int ONE = 1;
+	private static final int TWO = 2;
+	private static final int THREE = 3;
+    private static final int FOUR = 4;
 	private static final int FIVE = 5;
 	private static final int SIX = 6;
-	private static final int ZERO = 0;
 	
 	public static int chance(int d1, int d2, int d3, int d4, int d5)
 	{
@@ -26,15 +26,15 @@ public class Yatzy {
     }
 
     public static int ones(int d1, int d2, int d3, int d4, int d5) {
-    	return Arrays.stream(new int[] {d1,d2,d3,d4,d5}).filter(i -> i == 1).sum();
+    	return Arrays.stream(new int[] {d1,d2,d3,d4,d5}).filter(i -> i == ONE).sum();
     }
 
     public static int twos(int d1, int d2, int d3, int d4, int d5) {
-    	return Arrays.stream(new int[] {d1,d2,d3,d4,d5}).filter(i -> i == 2).sum();
+    	return Arrays.stream(new int[] {d1,d2,d3,d4,d5}).filter(i -> i == TWO).sum();
     }
 
     public static int threes(int d1, int d2, int d3, int d4, int d5) {
-    	return Arrays.stream(new int[] {d1,d2,d3,d4,d5}).filter(i -> i == 3).sum();
+    	return Arrays.stream(new int[] {d1,d2,d3,d4,d5}).filter(i -> i == THREE).sum();
     }
 
     protected int[] dice;
@@ -46,17 +46,17 @@ public class Yatzy {
 
     public int fours()
     {
-    	return Arrays.stream(dice).filter(i -> i == 4).sum();
+    	return Arrays.stream(dice).filter(i -> i == FOUR).sum();
     }
 
     public int fives()
     {
-    	return Arrays.stream(dice).filter(i -> i == 5).sum();
+    	return Arrays.stream(dice).filter(i -> i == FIVE).sum();
     }
 
     public int sixes()
     {
-    	return Arrays.stream(dice).filter(i -> i == 6).sum();
+    	return Arrays.stream(dice).filter(i -> i == SIX).sum();
     }
 
     public static int score_pair(int d1, int d2, int d3, int d4, int d5)
@@ -95,12 +95,12 @@ public class Yatzy {
             return ZERO;
     }
 
-    public static int four_of_a_kind(int _1, int _2, int d3, int d4, int d5)
+    public static int four_of_a_kind(int d1, int d2, int d3, int d4, int d5)
     {
         int[] tallies;
         tallies = new int[SIX];
-        tallies[_1-ONE]++;
-        tallies[_2-ONE]++;
+        tallies[d1-ONE]++;
+        tallies[d2-ONE]++;
         tallies[d3-ONE]++;
         tallies[d4-ONE]++;
         tallies[d5-ONE]++;
@@ -164,11 +164,11 @@ public class Yatzy {
     public static int fullHouse(int d1, int d2, int d3, int d4, int d5)
     {
         int[] tallies;
-        boolean _2 = false;
+        boolean two = false;
         int i;
-        int _2_at = ZERO;
-        boolean _3 = false;
-        int _3_at = ZERO;
+        int two_at = ZERO;
+        boolean three = false;
+        int three_at = ZERO;
 
 
 
@@ -182,18 +182,18 @@ public class Yatzy {
 
         for (i = ZERO; i != SIX; i += ONE)
             if (tallies[i] == TWO) {
-                _2 = true;
-                _2_at = i+ONE;
+                two = true;
+                two_at = i+ONE;
             }
 
         for (i = ZERO; i != SIX; i += ONE)
             if (tallies[i] == THREE) {
-                _3 = true;
-                _3_at = i+ONE;
+                three = true;
+                three_at = i+ONE;
             }
 
-        if (_2 && _3)
-            return _2_at * TWO + _3_at * THREE;
+        if (two && three)
+            return two_at * TWO + three_at * THREE;
         else
             return ZERO;
     }
