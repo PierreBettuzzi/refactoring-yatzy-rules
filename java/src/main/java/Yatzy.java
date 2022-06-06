@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class Yatzy {
 
@@ -8,8 +9,9 @@ public class Yatzy {
 	private static final int FIVE = 5;
 	private static final int SIX = 6;
 	private static final int ZERO = 0;
+	
 	public static int chance(int d1, int d2, int d3, int d4, int d5)
-    {
+	{
         return d1 + d2 +d3 +d4 +d5;
     }
 
@@ -18,85 +20,43 @@ public class Yatzy {
         int[] counts = new int[SIX];
         for (int die : dice)
             counts[die-ONE]++;
-        for (int i = ZERO; i != SIX; i++)
-            if (counts[i] == FIVE)
+        if(Arrays.stream(counts).anyMatch(i -> i == 5))
                 return 50;
         return ZERO;
     }
 
     public static int ones(int d1, int d2, int d3, int d4, int d5) {
-        int sum = ZERO;
-        if (d1 == ONE) sum++;
-        if (d2 == ONE) sum++;
-        if (d3 == ONE) sum++;
-        if (d4 == ONE) sum++;
-        if (d5 == ONE) 
-            sum++;
-
-        return sum;
+    	return Arrays.stream(new int[] {d1,d2,d3,d4,d5}).filter(i -> i == 1).sum();
     }
 
     public static int twos(int d1, int d2, int d3, int d4, int d5) {
-        int sum = ZERO;
-        if (d1 == TWO) sum += TWO;
-        if (d2 == TWO) sum += TWO;
-        if (d3 == TWO) sum += TWO;
-        if (d4 == TWO) sum += TWO;
-        if (d5 == TWO) sum += TWO;
-        return sum;
+    	return Arrays.stream(new int[] {d1,d2,d3,d4,d5}).filter(i -> i == 2).sum();
     }
 
     public static int threes(int d1, int d2, int d3, int d4, int d5) {
-        int s;    
-        s = ZERO;
-        if (d1 == THREE) s += THREE;
-        if (d2 == THREE) s += THREE;
-        if (d3 == THREE) s += THREE;
-        if (d4 == THREE) s += THREE;
-        if (d5 == THREE) s += THREE;
-        return s;
+    	return Arrays.stream(new int[] {d1,d2,d3,d4,d5}).filter(i -> i == 3).sum();
     }
 
     protected int[] dice;
-    public Yatzy(int d1, int d2, int d3, int d4, int _5)
+    public Yatzy(int... args)
     {
-        dice = new int[FIVE];
-        dice[ZERO] = d1;
-        dice[ONE] = d2;
-        dice[TWO] = d3;
-        dice[THREE] = d4;
-        dice[FOUR] = _5;
+		for (int die : args)
+			dice[die-ONE] = die;
     }
 
     public int fours()
     {
-        int sum;    
-        sum = ZERO;
-        for (int at = ZERO; at != FIVE; at++) {
-            if (dice[at] == FOUR) {
-                sum += FOUR;
-            }
-        }
-        return sum;
+    	return Arrays.stream(dice).filter(i -> i == 4).sum();
     }
 
     public int fives()
     {
-        int s = ZERO;
-        int i;
-        for (i = ZERO; i < dice.length; i++) 
-            if (dice[i] == FIVE)
-                s = s + FIVE;
-        return s;
+    	return Arrays.stream(dice).filter(i -> i == 5).sum();
     }
 
     public int sixes()
     {
-        int sum = ZERO;
-        for (int at = ZERO; at < dice.length; at++) 
-            if (dice[at] == SIX)
-                sum = sum + SIX;
-        return sum;
+    	return Arrays.stream(dice).filter(i -> i == 6).sum();
     }
 
     public static int score_pair(int d1, int d2, int d3, int d4, int d5)
